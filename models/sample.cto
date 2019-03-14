@@ -1,0 +1,53 @@
+/**
+ * Open Scholarship Network (Sample)
+ */
+namespace org.acme.mynetwork
+
+enum Orgnization {
+  o UBC
+  o SFU
+  o BCIT
+}
+
+enum Nationality{
+  o International
+  o Domestic
+}
+
+asset Scholarship identified by scholarshipID {
+  o String scholarshipID
+  o String description
+  o Boolean availability
+  o Double amount
+  --> ScholarshipAdmin admin
+}
+
+asset ApplicationProfile identified by assetKey {
+  o String assetKey
+}
+
+abstract participant User identified by userID {
+  o String userID
+  o Orgnization orgnization
+  o String firstName
+  o String lastName
+  o Double balance
+}
+
+participant ScholarshipAdmin extends User {
+  o String department
+}
+
+participant Applicant extends User {
+  o String yearLevel
+  o String faculty
+  o String program
+  o Nationality nationality
+}
+
+transaction sendScholarship {
+  --> ScholarshipAdmin admin
+  --> Applicant applicant
+  --> Scholarship scholarship
+}
+
